@@ -31,13 +31,13 @@ py3 main.py
 
 订阅日历
 
-```http
+```text
 http://xxx.xxx.xxx.xxx/PartyCalendar/events.ics
 ```
 
 如果你有域名，也可以通过域名访问
 
-```http
+```text
 http://furcw.fun/PartyCalendar/events.ics
 ```
 

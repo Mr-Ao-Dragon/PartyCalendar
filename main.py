@@ -1,6 +1,4 @@
 from datetime import datetime, timedelta
-import json
-import os
 import time
 import dataGET ,sysLog
 import atexit
@@ -21,12 +19,7 @@ def set_error_type(new_error_type):
     global errorType  # 声明使用全局变量
     errorType = new_error_type
 
-def set_Server_type(new_Server_type):
-    global ServerData
-    ServerData = new_Server_type
-
 set_error_type(0)
-set_Server_type('')
 
 
 logger.info("服务端已经启动啦～")
@@ -63,35 +56,6 @@ def getParty():
             return 'errorServer'
         return ''
     
-# while Star:
-#     if len(ServerData) == 0:
-#         ServerData = getParty()  # 假设 getParty() 是你获取数据的函数
-#         if ServerData == 'errorServer':
-#             break
-#         if not has_received_data:
-#             print("已收到数据")
-#             updataICS.readAPI(ServerData)  # 假设 updataICS.readAPI() 用于更新数据
-#             has_updated_today = True  # 标记为今天已经更新过
-#             has_received_data = True
-#         time.sleep(5)  # 等待5秒
-#     else:
-#         # 判断是否是新的一天
-#         today = timeSwitch.get_today_date()
-#         if today != timeSwitch.get_today_date():  # 这里可以判断今天是否已经更新过数据
-#             has_updated_today = False
-        
-#         # 检查是否到达4:00 AM 且今天还没有更新过
-#         if timeSwitch.is_after_four_am() and not has_updated_today:
-#             print("已经到达或超过 4:00 AM!")
-#             # 更新数据
-#             ServerData = getParty()
-#             updataICS.readAPI(ServerData)  # 假设 updataICS.readAPI() 用于更新数据
-#             has_updated_today = True  # 标记为今天已经更新过
-#         else:
-#             print("还未到达 4:00 AM 或 今天已经更新过数据.")
-        
-#         time.sleep(3600)  # 每小时检查一次
-
 def main():
     ServerData = ''
     has_received_data = False  # 标志位，确保只显示一次 "已收到数据"

@@ -1,7 +1,10 @@
 from datetime import datetime, timedelta
+import os
 import time
 import dataGET ,sysLog
 import atexit
+import subprocess
+import threading
 
 import timeSwitch
 import updataICS
@@ -12,8 +15,23 @@ Star = False
 # 使用日志模块
 logger = sysLog.setup_logger()
 
+def start_http_server():
+    # 使用 subprocess 启动 HTTP 服务器
+    # `python -m http.server 8000` 会启动一个 HTTP 服务器，监听端口 8000
+    subprocess.run(["python", "-m", "http.server", "8000"])
+    logger.info("文件共享已开启 开放端口[8000]")
+    logger.info("访问 127.0.0.1:8000 查看是否启动成功")
+
+def run_server_in_background():
+    # 使用线程在后台启动 HTTP 服务器
+    server_thread = threading.Thread(target=start_http_server)
+    server_thread.daemon = True  # 使线程在主程序退出时自动退出
+    server_thread.start()
+    logger.info("已将线程挂载至后台")
+
 def cleanup():
    logger.info("服务端已停止!")
+   logger.info("已关闭文件共享!")
 
 def set_error_type(new_error_type):
     global errorType  # 声明使用全局变量
@@ -86,7 +104,7 @@ def main():
                     logger.info("今天还没有更新数据.")
 
     except KeyboardInterrupt:
-        logger.info("\nCtrl+C 关闭了服务端!")
+        logger.info("Ctrl+C 关闭了服务端!")
         logger.info("兽聚日历数据将不再实时更新!")
         pass
 
@@ -103,7 +121,6 @@ def wait_until(target_hour, target_minute, target_second):
         delay = (target_time - now).total_seconds()
         print(f"等待 {delay} 秒，直到 {target_time} 执行 main()")
         time.sleep(delay)  # 等待到目标时间
-
         # 到达目标时间后执行 main()
         main()
 
@@ -111,5 +128,12 @@ def wait_until(target_hour, target_minute, target_second):
 atexit.register(cleanup) 
 
 if __name__ == "__main__":
-    # 设定目标时间为每天的 16:00:00
-    wait_until(4, 0, 0)
+    # 启动WedServer文件共享
+    run_server_in_background()
+    
+    if os.path.isfile('events.ics') == False:
+        # 没有文件，先初始化一份
+        main()
+    else:
+        # 设定目标时间为每天的 16:00:00
+        wait_until(4, 0, 0)

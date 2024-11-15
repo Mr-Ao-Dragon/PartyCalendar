@@ -1,6 +1,6 @@
 # PartyCalendar
 
-兽聚档期日历
+兽聚档期日历自动更新至手机日历
 
 使用 Python3 基于开发
 
@@ -15,7 +15,7 @@ pip install -r requirements.txt
 启动 兽聚档期日历自动更新
 
 ```sh
-py3 main.py
+python main.py
 ```
 
 启动后，在项目的根目录下面将会生成：
@@ -32,15 +32,10 @@ py3 main.py
 订阅日历
 
 ```text
-http://xxx.xxx.xxx.xxx/PartyCalendar/events.ics
+http://xxx.xxx.xxx.xxx:8000/events.ics
 ```
+将 `xxx.xxx.xxx.xxx` 替换为您局域网内,正在运行 `main.py` 的设备IP
 
-如果你有域名，也可以通过域名访问
+即可从手机日历中订阅该日历
 
-```text
-http://furcw.fun/PartyCalendar/events.ics
-```
-
-在使用时请务必记得将 `PartyCalendar` 文件夹设置成可 `共享访问`
-
-若不进行此设置，可能会导致无法正常访问到 `events.ics` 文件
+在运行 `main.py` 的设备上访问 `127.0.0.1:8000` 来验证是否成功开启了文件共享

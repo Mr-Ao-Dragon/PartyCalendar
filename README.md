@@ -15,25 +15,25 @@ pip install -r requirements.txt
 启动 兽聚档期日历自动更新
 
 ```sh
-python main.py
+python3 main.py
 ```
 
-启动后，在项目的根目录下面将会生成：
+首次启动后，将会在项目的根目录下面将会生成：
 
 * app.log
 
 - events.ics
 
+再次启动即可自动更新档期日历信息
 
 # 订阅日历
 
 打开手机日历，找到订阅日历行程功能
 
-订阅日历
-
 ```text
 http://xxx.xxx.xxx.xxx:8000/events.ics
 ```
+
 将 `xxx.xxx.xxx.xxx` 替换为您局域网内,正在运行 `main.py` 的设备IP
 
 即可从手机日历中订阅该日历

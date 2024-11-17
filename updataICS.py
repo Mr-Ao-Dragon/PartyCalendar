@@ -1,6 +1,4 @@
-import time
 from ics import Calendar, Event
-from datetime import datetime
 
 import sysLog
 import timeSwitch
@@ -111,13 +109,13 @@ def configICS(title,name,address,time_start,time_end,time_day,state,groups):
 
     formatted_groups = []
     for idx, group in enumerate(groups, start=1):
-        formatted_groups.append(f"{idx}.{group}")
+        formatted_groups.append(f"{idx}:`{group}`")
 
     groupsValue = ", ".join(formatted_groups)
-
-    description = f"档期主题:{name} 活动天数:{time_day} 兽聚状态:{stateValue} 官方QQ群:{groupsValue}"
+    timeValue = timeSwitch.get_today_date()
+    description = f"档期主题:{name} 活动天数:{time_day} 兽聚状态:{stateValue} 官方QQ群:{groupsValue} 最后更新时间:{timeValue}"
     # 使用空格替换换行符
-    description_with_newlines = description.replace(" ", "\r")
+    description_with_newlines = description.replace(" ", "\n")
 
 
     data = {

@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  partycalendar:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app  
+#    networks:
+#      - frp
+    restart: unless-stopped
+    container_name: partyCalendar
+#networks:
+#    frp:
+#        external:
+#            name: frp_frp

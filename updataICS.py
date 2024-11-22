@@ -3,6 +3,7 @@ from ics import Calendar, Event
 
 import timeSwitch
 
+eventsData = []
 events = []
 
 def disposeAPI(data):
@@ -11,49 +12,36 @@ def disposeAPI(data):
     最后由 configICS() 生成需要的数据内容\n
     存储为 json 类型到 events 列表中
     """
-    if not isinstance(data, dict) or 'data' not in data:
-        raise ValueError("Invalid input data format")
-    
-    def process_year(year_data):
-        if not isinstance(year_data, dict) or 'year' not in year_data:
-            return
-        year = year_data['year']
-        # print(f"Year: {year}")
-        
-        for month_data in year_data.get('data', []):
-            process_month(month_data)
-    
-    def process_month(month_data):
-        if not isinstance(month_data, dict) or 'month' not in month_data:
-            return
-        month = month_data['month']
-        # print(f"  Month: {month}")
-        
-        for event in month_data.get('list', []):
-            process_event(event)
-    
-    def process_event(event):
-        if not isinstance(event, dict):
-            return
-        title = event.get('title')
-        name = event.get('name')
-        state = event.get('state')
-        groups = event.get('groups', [])
-        address = event.get('address')
-        time_day = event.get('time_day')
-        time_start = event.get('time_start')
-        time_end = event.get('time_end')
-        
-        # 打印每个聚会的详细信息
-        # print_event_details(title, name, state, groups, address, time_start, time_end, time_day)
-        configICS(title, name, address, time_start, time_end, time_day, state, groups)
-    
-    try:
+    eventsData.clear()
+    events.clear()
+    def disposeData():
         for year_data in data.get('data', []):
-            process_year(year_data)
-    except Exception as e:
-        print(f"Error processing data: {e}")
+            for month_data in year_data.get('data', []):
+                events = month_data.get('list', [])
+                for event in events:
+                    eventsData.append(event)
 
+    def sortingData():
+        """
+        整理每个聚会的详细信息\n
+        并通过 configICS() 生成配置文件 
+        """
+        disposeData()
+        # 遍历每个聚会的详细信息
+        for event in eventsData:
+            title = event.get('title')
+            name = event.get('name')
+            state = event.get('state')
+            groups = event.get('groups', [])
+            address = event.get('address')
+            time_day = event.get('time_day')
+            time_start = event.get('time_start')
+            time_end = event.get('time_end')
+            
+            value = configICS(title,name,address,time_start,time_end,time_day,state,groups)
+        return value
+    
+    return sortingData()
 
 def configICS(title, name, address, time_start, time_end, time_day, state, groups):
     """
@@ -67,8 +55,6 @@ def configICS(title, name, address, time_start, time_end, time_day, state, group
     state:售票状态[兽聚状态码 0.活动结束 1.预告中 2.售票中 3.活动中 4.活动取消]\n
     groups:官方群聊
     """
-    
-    # logger.info("生成 events.ics 配置文件ing~")
     
     # 时间换算
     time_start_Value = timeSwitch.convert_time_start(time_start)
@@ -86,6 +72,7 @@ def configICS(title, name, address, time_start, time_end, time_day, state, group
             stateValue = '活动中'
         case 4:
             stateValue = '活动取消'
+
     formatted_groups = []
     for idx, group in enumerate(groups, start=1):
         formatted_groups.append(f"{idx}:`{group}`")
@@ -103,28 +90,23 @@ def configICS(title, name, address, time_start, time_end, time_day, state, group
         "LOCATION": f"展会所在地:{address}",
         "DESCRIPTION": description_with_newlines
     })
-    genICS(events)
+    return writeICS(events)
 
-
-
-# @functools.lru_cache(maxsize=None)
-def genICS(events_data):
+def writeICS(events_data):
     """
-        写入ICS
-        """
-    # 创建一个日历对象
-    calendar = Calendar()
+    写入ICS
+    """
+   # 创建一个日历对象
+    calendarData = Calendar()
     
     # 遍历事件数据并添加事件
     for event_data in events_data:
         event = Event()
         event.name = event_data['SUMMARY']
-        event.begin = event_data['DTSTART'] + "T020000Z"
-        event.end = event_data['DTEND'] + "T020000Z"
+        event.begin = event_data['DTSTART']+"T020000Z"
+        event.end = event_data['DTEND']+"T020000Z"
         event.location = event_data['LOCATION']
         event.description = event_data['DESCRIPTION']
-        
         # 将事件添加到日历
-        calendar.events.add(event)
-        print(calendar)
-        return calendar
+        calendarData.events.add(event)
+    return calendarData

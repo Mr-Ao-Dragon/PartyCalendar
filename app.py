@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+import os
 import time
 from flask import Flask, render_template
 import dataGET, sysLog
@@ -31,18 +33,10 @@ def index():  # put application's code here
     return render_template('./index.html')
 
 @app.route('/events')
-def events(): # 全部聚会的档期日历
-    errorType = 0
-    eventsData = dataGET.furParty_GET()
+def events():
+    value = updataICS.disposeAPI(dataGET.furParty_GET())
+    return f"{value}"
 
-    # 判断是否已正常链接 API 服务器
-    if eventsData['code'] != 'OK':
-        retryServer(errorType)
-    
-    print(updataICS.disposeAPI(eventsData))
-
-
-    return eventsData
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='192.168.101.169', port=5000)

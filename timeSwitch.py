@@ -16,10 +16,10 @@ def convert_time_end(date_str):
     timestamp = int(date_obj.timestamp())
     
     # 增加一天（86400秒）
-    new_timestamp = timestamp + 86400
+    # new_timestamp = timestamp + 86400
     
     # 将增加一天后的时间戳转为 datetime 对象
-    new_date_obj = datetime.fromtimestamp(new_timestamp)
+    new_date_obj = datetime.fromtimestamp(timestamp)
     
     # 转换为 'yyyyMMdd' 格式的字符串
     new_date_str = new_date_obj.strftime("%Y%m%d")

@@ -20,7 +20,8 @@
     "jetbrains": {
       "backend": "PyCharm",
       "plugins": [
-        "com.chylex.intellij.inspectionlens"
+        "com.chylex.intellij.inspectionlens",
+        "com.intellij.zh"
       ]
     },
     "vscode": {

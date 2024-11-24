@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加日历事件</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            max-width: 600px;
+            background-color: #f9f9f9;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        button {
+            margin: 10px 0;
+            padding: 10px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>订阅兽聚档期</h1>
+    <p>点击按钮复制 订阅兽聚档期链接</p>
+    <button onclick="copyLink()">复制订阅链接</button>
+    <p id="displayLink"></p>
+    <h2>关于兽聚档期日历</h2>
+    <p>通过手机上的日历软件 订阅日历ICS链接</p>
+    <p>就可以通过手机查看到全国各个地区的档期信息</p>
+    <p>如果在使用中遇到疑问🤔或者其他问题🙋</p>
+    <p>可以通过链接🔗:<a href="https://wj.qq.com/s2/16355852/66b7/">https://wj.qq.com/s2/16355852/66b7/</a>反馈遇到的问题</p>
+    <p>也可以直接通过QQ联系一德:<a href="https://qm.qq.com/q/g3Mkzua48g">1028647581</a></p>
+    <p>加入 FurryChatWorld 了解最新资讯:<a href="https://qm.qq.com/q/o89dZM867m">769743113</a></p>
+    <footer style="margin-top: 20px; text-align: center; font-size: 14px; color: #666;">
+        由 FurryChatWorld 制作｜兽化科技 提供信息源支持!
+    </footer>
+</body>
+<script>
+    function copyLink() {
+            const input = document.createElement("input");
+            input.value = "http://party.furcw.fun/events";  // 要复制的链接
+            document.body.appendChild(input);
+            input.select();  // 选中文本
+
+            try {
+                // 执行复制操作
+                const successful = document.execCommand("copy");
+                
+                if (successful) {
+                    alert("链接已复制到剪切板！");
+                    document.getElementById("displayLink").innerText = "以防复制失败: " + input.value;
+                } else {
+                    // 如果复制失败，给出提示
+                    alert("复制失败，请重试！");
+                }
+            } 
+            catch (err) {
+                document.getElementById("displayLink").innerText = "以防复制失败: " + input.value;
+            }
+
+            // 删除临时创建的输入框
+            document.body.removeChild(input);
+        }
+    </script>
+</html>

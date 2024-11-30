@@ -6,6 +6,7 @@ import timeSwitch
 eventsData = []
 events = []
 
+
 def disposeAPI(data):
     """
     处理从 API 中获得的数据\n
@@ -14,13 +15,14 @@ def disposeAPI(data):
     """
     eventsData.clear()
     events.clear()
+    
     def disposeData():
         for year_data in data.get('data', []):
             for month_data in year_data.get('data', []):
                 events = month_data.get('list', [])
                 for event in events:
                     eventsData.append(event)
-
+    
     def sortingData():
         """
         整理每个聚会的详细信息\n
@@ -38,12 +40,21 @@ def disposeAPI(data):
             time_start = event.get('time_start')
             time_end = event.get('time_end')
             
-            value = configICS(title,name,address,time_start,time_end,time_day,state,groups)
+            value = configICS(title, name, address, time_start, time_end, time_day, state, groups)
         return value
     
     return sortingData()
 
-def configICS(title, name, address, time_start, time_end, time_day, state, groups):
+
+class CalendarData:
+    """
+    约束目标内容
+    """
+    title:str
+    name:str
+
+
+def configICS(title: str, name: str, address: str, time_start, time_end, time_day, state, groups):
     """
     生成ICS文件\n
     title:展会名称\n
@@ -72,7 +83,7 @@ def configICS(title, name, address, time_start, time_end, time_day, state, group
             stateValue = '活动中'
         case 4:
             stateValue = '活动取消'
-
+    
     formatted_groups = []
     for idx, group in enumerate(groups, start=1):
         formatted_groups.append(f"{idx}:`{group}`")
@@ -92,19 +103,20 @@ def configICS(title, name, address, time_start, time_end, time_day, state, group
     })
     return writeICS(events)
 
+
 def writeICS(events_data):
     """
     写入ICS
     """
-   # 创建一个日历对象
+    # 创建一个日历对象
     calendarData = Calendar()
     
     # 遍历事件数据并添加事件
     for event_data in events_data:
         event = Event()
         event.name = event_data['SUMMARY']
-        event.begin = event_data['DTSTART']+"T020000Z"
-        event.end = event_data['DTEND']+"T020000Z"
+        event.begin = event_data['DTSTART'] + "T020000Z"
+        event.end = event_data['DTEND'] + "T020000Z"
         event.location = event_data['LOCATION']
         event.description = event_data['DESCRIPTION']
         # 将事件添加到日历

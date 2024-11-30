@@ -2,14 +2,13 @@ import time
 import requests
 
 
-def furParty_GET():
+def furPartyGET():
     """
     调用后获得全部兽聚信息\n
     返回 聚会的 JSON 文件
     """
     # API的URL（替换为实际的API URL）
     url = 'https://api.furryfusion.net/service/activity'  # 活动档期URL
-    # 动态生成时间戳
     
     # 发送GET请求获取数据
     response = requests.get(url=url,

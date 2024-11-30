@@ -6,3 +6,4 @@ transpiled
 .wrangler
 .dev.vars
 /.venv/
+*.env.vars

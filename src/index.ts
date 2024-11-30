@@ -13,7 +13,7 @@
 
 export interface Env {
 	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
-	// MY_KV_NAMESPACE: KVNamespace
+	MY_KV_NAMESPACE: KVNamespace;
 	//
 	// Example binding to Durable Object. Learn more at https://developers.cloudflare.com/workers/runtime-apis/durable-objects/
 	// MY_DURABLE_OBJECT: DurableObjectNamespace
@@ -29,5 +29,13 @@ export const worker = {
 		ctx: ExecutionContext
 	): Promise<Response> {
 		return new Response(`Hello World from ${request.method}!`);
+	},
+	async scheduled(
+		event: ScheduledEvent,
+		env: Env,
+		ctx: ExecutionContext
+	): Promise<Response> {
+		// time trigger as here
+		return new Response(`Hello World from ${event.cron}!`);
 	},
 };

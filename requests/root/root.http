@@ -1,5 +1,7 @@
 ### GET request to data source
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=WebStorm
+GET https://api.furrycons.cn/event/recent
+Accept: application/json
+Accept-Charset: utf-8
+User-Agent: calendar/2.0
 
 ###

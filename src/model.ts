@@ -1,30 +1,28 @@
 export default interface ApiResponse {
-	code: string;
-	source: string;
-	data: YearData[];
-	rel: string;
+	total: 1;
+	data: Data[];
 }
 
-interface YearData {
-	year: number;
-	data: MonthData[];
-}
-
-interface MonthData {
-	month: string;
-	list: EventData[];
-}
-
-interface EventData {
-	title: string;
+interface Data {
 	name: string;
-	image: string;
-	state: number;
-	groups: string[];
+	scale: string;
+	status: string;
+	slug: string;
+	startDate: string;
+	endDate: string;
 	address: string;
-	special: number;
-	time_day: number;
-	time_start: string;
-	time_end: string;
-	path: string;
+	city: string;
+	coverUrl: string;
+	detail: string;
+	organization: organization;
+	globalUrl: string;
+	cnUrl: string;
+}
+
+interface organization {
+	name: string;
+	slug: string;
+	coverUrl: string;
+	globalUrl: string;
+	cnUrl: string;
 }

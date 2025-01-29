@@ -14,6 +14,8 @@ crons = ["0 0 0 * * ? *"]
 command = "npm install;npm run build"
 watch_dir = "src"
 
+[env]
+DATA_SOORCE="https://api.furrycons.cn/event/recent"
 [kv_namespaces]
 binding = {{__SECRET__KV_NAMESPACE__}}
 id = {{__SECRET__KV_ID__}}

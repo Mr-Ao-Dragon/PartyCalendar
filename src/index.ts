@@ -7,6 +7,7 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
+import { tesk } from "./fetchData";
 
 // These initial Types are based on bindings that don't exist in the project yet,
 // you can follow the links to learn how to implement them.
@@ -36,6 +37,7 @@ export const worker = {
 		ctx: ExecutionContext
 	): Promise<Response> {
 		// time trigger as here
+		await tesk(env);
 		return new Response(`Hello World from ${event.cron}!`);
 	},
 };

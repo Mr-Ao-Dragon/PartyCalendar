@@ -7,3 +7,4 @@ transpiled
 .dev.vars
 /.venv/
 *.env.vars
+/secret.dev.vars

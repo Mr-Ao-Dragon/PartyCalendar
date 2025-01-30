@@ -2,7 +2,7 @@ main = "./src/index.ts"
 name = "partycalendar"
 compatibility_date = "2024-11-11"
 routes = [
-	{ pattern = "${{__SECRET__DOMAIN__}}/*", custom_domain = true }
+	{ pattern = "cons.furcw.fun/*", custom_domain = true }
 ]
 [observability.logs]
 enabled = true
@@ -15,12 +15,9 @@ command = "npm install;npm run build"
 watch_dir = "src"
 
 [env]
-DATA_SOORCE="https://api.furrycons.cn/event/recent"
-[kv_namespaces]
-binding = ${{__SECRET__KV_NAMESPACE__}}
-id = ${{__SECRET__KV_ID__}}
+DATA_SOORCE = "https://api.furrycons.cn/event/recent"
 
 [[d1_databases]]
 binding = "DB" # available in your Worker on env.DB
-database_name = "${{__SECRET__DB_NAME__}}"
-database_id = "${{__SECRET__DB_ID__}}"
+database_name = "cons-calendar"
+database_id = "bbb46772-1d07-4094-9ff6-0ec62d9614b2"

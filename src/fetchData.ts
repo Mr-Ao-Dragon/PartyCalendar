@@ -1,5 +1,7 @@
 import { Env } from "./index";
 import axios from "axios/index";
+import DataSourceModel from "./model";
+import { AxiosResponse } from "axios";
 
 export async function tesk(env: Env): Promise<any> {
 	const data: any = null;
@@ -8,9 +10,9 @@ export async function tesk(env: Env): Promise<any> {
 		throw new Error("数据源地址未填写");
 	}
 	axios
-		.get(apiAddress)
+		.get<DataSourceModel, AxiosResponse<DataSourceModel>>(apiAddress)
 		.then(function (response) {
-			console.log("geted");
+			console.log("parsing...");
 		})
 		.catch(function (reason) {
 			console.error(reason);
